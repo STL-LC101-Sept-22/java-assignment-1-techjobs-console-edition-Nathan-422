@@ -5,10 +5,7 @@ import org.apache.commons.csv.CSVRecord;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by LaunchCode
@@ -70,6 +67,9 @@ public class JobData {
      */
     public static ArrayList<HashMap<String, String>> findByColumnAndValue(String column, String value) {
 
+        // make search term lowercase to be case-insensitive
+        value = value.toLowerCase();
+
         // load data, if not already loaded
         loadData();
 
@@ -77,7 +77,8 @@ public class JobData {
 
         for (HashMap<String, String> row : allJobs) {
 
-            String aValue = row.get(column);
+            // get lowercase value from job
+            String aValue = row.get(column).toLowerCase();
 
             if (aValue.contains(value)) {
                 jobs.add(row);
@@ -93,13 +94,32 @@ public class JobData {
      * @param value The search term to look for
      * @return      List of all jobs with at least one field containing the value
      */
+
     public static ArrayList<HashMap<String, String>> findByValue(String value) {
+
+        // make search term lowercase to be case-insensitive
+        value = value.toLowerCase();
 
         // load data, if not already loaded
         loadData();
 
-        // TODO - implement this method
-        return null;
+        ArrayList<HashMap<String, String>> foundJobs = new ArrayList<>();
+
+        // go through list of all jobs
+        for (HashMap<String, String> job : allJobs) {
+
+            // go through entries in the hashmap
+            for (Map.Entry<String, String> entry : job.entrySet()) {
+
+                // add search matches to ArrayList to be returned
+                if (entry.getValue().toLowerCase().contains(value)) {
+                    foundJobs.add(job);
+                    break;
+                }
+            }
+        }
+
+        return foundJobs;
     }
 
     /**

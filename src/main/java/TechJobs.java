@@ -32,15 +32,20 @@ public class TechJobs {
 
             String actionChoice = getUserSelection("View jobs by (type 'x' to quit):", actionChoices);
 
+            // quit program or continue interface
             if (actionChoice == null) {
                 break;
             } else if (actionChoice.equals("list")) {
 
+                // get user input
                 String columnChoice = getUserSelection("List", columnChoices);
 
                 if (columnChoice.equals("all")) {
+                    // print all header options
+
                     printJobs(JobData.findAll());
                 } else {
+                    // print a single header worth of data
 
                     ArrayList<String> results = JobData.findAll(columnChoice);
 
@@ -85,6 +90,8 @@ public class TechJobs {
             i++;
         }
 
+
+        // loop for valid menu selection from the user
         do {
 
             System.out.println("\n" + menuHeader);
@@ -94,6 +101,7 @@ public class TechJobs {
                 System.out.println("" + j + " - " + choices.get(choiceKeys[j]));
             }
 
+            // check for int input or check for quit command
             if (in.hasNextInt()) {
                 choiceIdx = in.nextInt();
                 in.nextLine();
@@ -120,6 +128,61 @@ public class TechJobs {
     // Print a list of jobs
     private static void printJobs(ArrayList<HashMap<String, String>> someJobs) {
 
-        System.out.println("printJobs is not implemented yet");
+        /*  FORMAT:
+        *****
+        position type: Data Scientist / Business Intelligence
+        name: Sr. IT Analyst (Data/BI)
+        employer: Bull Moose Industries
+        location: Saint Louis
+        core competency: Statistical Analysis
+        *****
+        */
+
+        // early return on empty array
+        if (someJobs.size() == 0) {
+            System.out.print("No Results");
+            return;
+        }
+
+
+        int index = 0;  // control for line break printing
+
+        System.out.println();   // extra line to match formatting
+        for (HashMap<String, String> job : someJobs) {
+
+            // loop through each job in the ArrayList
+            // personally, I'm a bit against this approach as it
+            // is subject to change with more
+            System.out.println("*****");
+            for (Map.Entry<String, String> entry : job.entrySet()) {
+                System.out.println(entry.getKey() + ": " + entry.getValue());
+            }
+            System.out.println("*****");
+
+            /*
+            // print fixed output
+            System.out.printf(
+                    "*****\n" +
+                            "position type: %s\n" +
+                            "name: %s\n" +
+                            "employer: %s\n" +
+                            "location: %s\n" +
+                            "core competency: %s\n" +
+                            "*****\n",
+                    job.get("position type"),
+                    job.get("name"),
+                    job.get("employer"),
+                    job.get("location"),
+                    job.get("core competency")
+            );
+             */
+
+            // print line break in between results
+            if (index < someJobs.size() -1 ) {
+                System.out.println();
+            }
+            index++;
+
+        }
     }
 }
