@@ -125,7 +125,6 @@ public class TechJobs {
         return choiceKeys[choiceIdx];
     }
 
-    // TODO: implement me!
     // Print a list of jobs
     private static void printJobs(ArrayList<HashMap<String, String>> someJobs) {
 
@@ -150,6 +149,18 @@ public class TechJobs {
 
         System.out.println();   // extra line to match formatting
         for (HashMap<String, String> job : someJobs) {
+
+            // loop through each job in the ArrayList
+            // personally, I'm a bit against this approach as it
+            // is subject to change with more
+            System.out.println("*****");
+            for (Map.Entry<String, String> entry : job.entrySet()) {
+                System.out.println(entry.getKey() + ": " + entry.getValue());
+            }
+            System.out.println("*****");
+
+            /*
+            // print fixed output
             System.out.printf(
                     "*****\n" +
                             "position type: %s\n" +
@@ -164,6 +175,7 @@ public class TechJobs {
                     job.get("location"),
                     job.get("core competency")
             );
+             */
 
             // print line break in between results
             if (index < someJobs.size() -1 ) {
